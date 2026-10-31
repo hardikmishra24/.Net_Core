@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-
-namespace Middleware.CustomMiddleware
+﻿namespace Middleware.CustomMiddleware
 {
     // Custom Middleware class is used to separate the middleware logic from labda expression to seperate class.
     // Middleware class implements an interface called IMIddleware to register itself as a middleware.
@@ -9,7 +6,9 @@ namespace Middleware.CustomMiddleware
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            await context.Response.WriteAsync("My Custon Middleware - started");
             await next(context);
-        }
+            await context.Response.WriteAsync("Custom Middleware - ended");
+         }
     }
 }

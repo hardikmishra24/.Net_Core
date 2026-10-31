@@ -1,4 +1,6 @@
+using Middleware.CustomMiddleware;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddTransient<MyCustomMiddleware>();
 var app = builder.Build();
 
 // MIddlewares is a component that is used in application pipeline to handle requests and responses
@@ -12,12 +14,8 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
     await next(context);
 });
 
-// Middleware 2
-app.Use(async (context, next) =>
-{
-    await context.Response.WriteAsync("Hello Again");
-    await next(context);
-});
+// Middleware 2  [UseMiddleware function is used to Connect to custom middleware class.] 
+app.UseMiddleware<MyCustomMiddleware>();
 
 // // Middleware 3 (terminal middleware)
 // .Run method does not allows us to join to another middleware (cannot form a middlware chain using it)
