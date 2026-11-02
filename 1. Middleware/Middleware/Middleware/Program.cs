@@ -10,18 +10,31 @@ var app = builder.Build();
 // Middleware 1
 app.Use(async (HttpContext context, RequestDelegate next) =>
 {
-    await context.Response.WriteAsync("Hello");
-    await next(context);
+    await context.Response.WriteAsync("Hello ");
+    await next(context);    // Written for connecting the middleware to the next middleware and in the paramters the httpcontext object reference is passed.
 });
 
 // Middleware 2  [UseMiddleware function is used to Connect to custom middleware class.] 
-app.UseMiddleware<MyCustomMiddleware>();
+//app.UseMiddleware<MyCustomMiddleware>();
+
+
+// Connecting the middleware using the extension method (it is not necessary but a common convention)
+app.UseCustomMiddleware();
+
+
+
+
 
 // // Middleware 3 (terminal middleware)
 // .Run method does not allows us to join to another middleware (cannot form a middlware chain using it)
 app.Run(async (context) =>
 {
-    await context.Response.WriteAsync("Hello last");
+    await context.Response.WriteAsync("Hello last ");
 });
 
 app.Run();
+
+
+
+
+

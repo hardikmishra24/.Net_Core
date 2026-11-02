@@ -6,9 +6,20 @@
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            await context.Response.WriteAsync("My Custon Middleware - started");
+            await context.Response.WriteAsync("My Custon Middleware - started ");
             await next(context);
-            await context.Response.WriteAsync("Custom Middleware - ended");
+            await context.Response.WriteAsync("Custom Middleware - ended ");
          }
     }
+
+    //Creating the extension method
+    public static class CustomMiddlewareExtension 
+    {
+        public static IApplicationBuilder UseCustomMiddleware(this IApplicationBuilder app) // We can access this function using the app object.
+        {
+            return app.UseMiddleware<MyCustomMiddleware>();
+        } 
+    }
 }
+
+
