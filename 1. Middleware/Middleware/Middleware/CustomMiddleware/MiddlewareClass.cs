@@ -14,10 +14,14 @@ namespace Middleware.CustomMiddleware
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext)
         {
-
-            return _next(httpContext);
+            if (httpContext.Request.Query.ContainsKey("name")) 
+            {
+                string names = httpContext.Request.Query["name"];
+               await httpContext.Response.WriteAsync(names);
+            };
+            await _next(httpContext);
         }
     }
 

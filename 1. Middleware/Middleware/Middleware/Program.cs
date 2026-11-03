@@ -21,6 +21,7 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 // Connecting the middleware using the extension method (it is not necessary but a common convention)
 app.UseCustomMiddleware();
 
+app.UseMiddleware();
 
 
 
