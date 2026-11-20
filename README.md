@@ -1,1 +1,1 @@
-# .Net_Core
+Learning .Net Core
